@@ -3,26 +3,25 @@ package com.example.demo.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Categoria;
+import com.example.demo.domain.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
-		@RequestMapping(method = RequestMethod.GET)
-		public List<Categoria> listar() {
+	
+	private CategoriaService service;
+		@RequestMapping(value="/(id)",method = RequestMethod.GET)
+		public ResponseEntity<?> find(Integer id) {
 			
-			Categoria cat1 = new Categoria(1, "informatica");
-			Categoria cat2 = new Categoria(2, "escritorio");
+			Categoria obj = service.buscar(id);
+			return ResponseEntity.ok().body(obj);
 			
-			List<Categoria> lista = new ArrayList<>();
-			lista.add(cat1);
-			lista.add(cat2);
-			
-			return lista;
 		}
 
 }
